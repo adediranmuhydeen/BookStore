@@ -18,5 +18,10 @@ namespace BookStore.Web.Controllers
 
             return View( _context.Categories);
         }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
     }
 }
