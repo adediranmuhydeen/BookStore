@@ -1,6 +1,6 @@
 ﻿using BookStore.Web.Data;
+using BookStore.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Web.Controllers
 {
@@ -19,9 +19,26 @@ namespace BookStore.Web.Controllers
             return View( _context.Categories);
         }
 
-        public async Task<IActionResult> Create()
+
+        //Get
+        public IActionResult Create()
         {
             return View();
+        }
+
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                await _context.Categories.AddAsync(obj);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }
