@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\BookStore.Web.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\adediranma\\source\\repos\\BookStore\\BookStore.Web\\wwwroot\\css\\Theme.css",
+      "PackagePath": "staticwebassets\\css\\Theme.css"
+    },
+    {
       "Id": "C:\\Users\\adediranma\\source\\repos\\BookStore\\BookStore.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
