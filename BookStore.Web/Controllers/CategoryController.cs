@@ -33,17 +33,14 @@ namespace BookStore.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Category obj)
         {
-            //if (obj.Name == obj.CreatedDate)
-            //{
-            //    ModelState.AddModelError("CustomErro", "Name and Quantity cannot be the same");
-            //}
+           
             if (ModelState.IsValid)
             {
                 await _context.Categories.AddAsync(obj);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return RedirectToAction("Index");
         }
 
         //Get
@@ -56,27 +53,53 @@ namespace BookStore.Web.Controllers
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == Id);
             if (category == null)
             {
-                return NotFound(nameof(Category));
+                return NotFound();
             }
             return View(category);
         }
 
         //Pust
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Category obj)
-        {
-            //if (obj.Name == obj.CreatedDate)
-            //{
-            //    ModelState.AddModelError("CustomErro", "Name and Quantity cannot be the same");
-            //}
+        {            
             if (ModelState.IsValid)
             {
-                await _context.Categories.AddAsync(obj);
+                _context.Categories.Update(obj);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        //Get
+        public async Task<IActionResult> Delete(int? Id)
+        {
+            if (Id == null || Id == 0)
+            {
+                return NotFound();
+            }
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == Id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        //Pust
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var obj = await _context.Categories.FindAsync(Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _context.Categories.Remove(obj);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
